@@ -2,7 +2,7 @@ import { IsDate, IsString } from 'class-validator';
 import { User } from 'src/users/entities/User.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'timelines' })
 export class Timeline {
   @Column({ type: 'date' })
   @IsDate()

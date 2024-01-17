@@ -2,7 +2,7 @@ import { Post } from 'src/posts/entities/Post.entity';
 import { Timeline } from './../../timeline/entities/Timeline.entity';
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

@@ -10,7 +10,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { enviroments } from './enviroments';
 import config from './config';
-import configSchema from './configSchema';
+//import configSchema from './configSchema';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import configSchema from './configSchema';
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       load: [config],
       isGlobal: true,
-      validationSchema: configSchema,
+      //validationSchema: configSchema,
     }),
     UsersModule,
     TimelineModule,

@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -23,8 +22,8 @@ export class TimelineController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.timelineService.findOne(+id);
+  findOne(@Param('id') id: Date) {
+    return this.timelineService.findOne(id);
   }
 
   @Post()
@@ -33,15 +32,12 @@ export class TimelineController {
   }
 
   @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateTimelineDto: UpdateTimelineDto,
-  ) {
+  update(@Param('id') id: Date, @Body() updateTimelineDto: UpdateTimelineDto) {
     return this.timelineService.update(id, updateTimelineDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id') id: Date) {
     return this.timelineService.remove(id);
   }
 }

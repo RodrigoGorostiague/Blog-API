@@ -1,63 +1,49 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './../entities/Post.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { CreatePostDto } from '../dtos/post.dto';
 
 @Injectable()
 export class PostService {
-  private posts: Post[] = [
-    {
-      id: 1,
-      title: 'Creacion de la Api',
-      content:
-        'Se creo la api con nestjs y se subio a github. Lorem ipsum dolor sit ame consectetur adipi scing elit. Quisquam, quos?',
-      author: {
-        id: 1,
-        name: 'Rodaja',
-        role: 'admin',
-      },
-      img: ['https://www.nestjs.com/img/logo-small.svg'],
-      creatAt: new Date(),
-      reply: [
-        {
-          id: 2,
-          title: 'Creacion de la Api',
-          content:
-            'Se creo la api con nestjs y se subio a github. Lorem ipsum dolor sit ame consectetur adipi scing elit. Quisquam, quos?',
-          author: {
-            id: 2,
-            name: 'Yisus',
-            role: 'admin',
-          },
-          img: ['https://www.nestjs.com/img/logo-small.svg'],
-          creatAt: new Date(),
-        },
-      ],
-    },
-  ];
+  constructor(
+    @InjectRepository(Post) private postRepository: Repository<Post>,
+  ) {}
 
   findAll() {
-    return this.posts;
+    return this.postRepository.find();
   }
 
   findOne(id: number) {
-    return this.posts[id];
+    const post = this.postRepository.findOneBy({ id });
+    if (!post) {
+      throw new NotFoundException(`Post #${id} not found`);
+    } else {
+      return post;
+    }
   }
 
-  create(data: any) {
-    this.posts.push(data);
-    return data;
+  create(data: CreatePostDto) {
+    const newPost = this.postRepository.create(data);
+    return this.postRepository.save(newPost);
   }
 
-  update(id: number, changes: any) {
-    const updatedPost = {
-      ...this.posts[id],
-      ...changes,
-    };
-    this.posts[id] = updatedPost;
-    return this.posts[id];
+  async update(id: number, changes: any) {
+    const post = await this.postRepository.findOneBy({ id });
+    if (!post) {
+      throw new NotFoundException(`Post #${id} not found`);
+    } else {
+      this.postRepository.merge(post, changes);
+      return this.postRepository.save(post);
+    }
   }
 
-  remove(id: number) {
-    this.posts.splice(id, 1);
-    return true;
+  async remove(id: number) {
+    const post = await this.findOne(id);
+    if (!post) {
+      throw new NotFoundException(`Post #${id} not found`);
+    } else {
+      return this.postRepository.delete(id);
+    }
   }
 }

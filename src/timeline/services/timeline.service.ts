@@ -1,44 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Timeline } from '../entities/Timeline.entity';
-import { UpdateTimelineDto } from '../dtos/timeline.dto';
+import { CreateTimelineDto, UpdateTimelineDto } from '../dtos/timeline.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TimelineService {
-  private timeLine: Timeline[] = [
-    {
-      cratedAt: new Date(),
-      title: 'Creacion de la Api',
-      content: 'Se creo la api con nestjs y se subio a github',
-      img: ['https://www.nestjs.com/img/logo-small.svg'],
-      tag: ['nestjs', 'api'],
-    },
-  ];
+  constructor(
+    @InjectRepository(Timeline)
+    private timelineRepository: Repository<Timeline>,
+  ) {}
 
   findAll() {
-    return this.timeLine;
+    return this.timelineRepository.find();
   }
 
-  findOne(id: number) {
-    return this.timeLine[id];
+  async findOne(cratedAt: Date) {
+    const timeline = this.timelineRepository.findOneBy({ cratedAt });
+    if (!timeline) {
+      throw new NotFoundException(`Timeline #${cratedAt} not found`);
+    }
+    return timeline;
   }
 
-  create(data: any) {
-    this.timeLine.push(data);
-    return data;
+  create(data: CreateTimelineDto) {
+    const newTimeline = this.timelineRepository.create(data);
+    return this.timelineRepository.save(newTimeline);
   }
 
-  update(id: number, changes: UpdateTimelineDto) {
-    const updatedTimeline: Timeline = {
-      ...this.timeLine[id],
-      cratedAt: new Date(),
-      ...changes,
-    };
-    this.timeLine[id] = updatedTimeline;
-    return this.timeLine[id];
+  async update(cratedAt: Date, changes: UpdateTimelineDto) {
+    const timeline = await this.timelineRepository.findOneBy({ cratedAt });
+    if (!timeline) {
+      throw new NotFoundException(`Timeline #${cratedAt} not found`);
+    } else {
+      this.timelineRepository.merge(timeline, changes);
+      return this.timelineRepository.save(timeline);
+    }
   }
 
-  remove(id: number) {
-    this.timeLine.splice(id, 1);
-    return true;
+  async remove(createdAt: Date) {
+    const timeline = await this.findOne(createdAt);
+    if (!timeline) {
+      throw new NotFoundException(`Timeline #${createdAt} not found`);
+    } else {
+      return this.timelineRepository.delete(createdAt);
+    }
   }
 }

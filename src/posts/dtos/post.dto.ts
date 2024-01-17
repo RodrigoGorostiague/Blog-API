@@ -1,22 +1,24 @@
 import { User } from './../../users/entities/User.entity';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsString, IsUrl } from 'class-validator';
+import { Post } from '../entities/Post.entity';
 export class CreatePostDto {
   @IsString()
   @ApiProperty()
-  readonly title: string;
+  title: string;
   @IsString()
   @ApiProperty()
-  readonly content: string;
-  @ApiProperty()
-  readonly author: User;
+  content: string;
+  author: User;
   @IsDate()
   @ApiProperty()
-  readonly creatAt: Date;
-  @IsString()
+  creatAt: Date;
+  @IsUrl()
   @ApiProperty()
-  readonly img?: string;
+  img?: string[];
+  @ApiProperty()
+  reply?: Post[];
 }
 
 export class UpdatePostDto extends PartialType(CreatePostDto) {}

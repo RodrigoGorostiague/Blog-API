@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './../../users/entities/User.entity';
 
 @Entity()
@@ -9,6 +9,7 @@ export class Post {
   title: string;
   @Column({ type: 'text' })
   content: string;
+  @OneToMany(() => User, (user) => user.posts)
   author: User;
   @Column({ type: 'date' })
   creatAt: Date;

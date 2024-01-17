@@ -10,12 +10,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostService } from '../services/post.service';
-import { CreatePostDto } from '../dtos/post.dto';
+import { CreatePostDto } from '../dtos/Post.dto';
 
 @ApiTags('Publicaciones')
 @Controller('publicaciones')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private postService: PostService) {}
 
   @Get()
   findAll() {

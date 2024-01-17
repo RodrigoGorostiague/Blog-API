@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './../entities/Post.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CreatePostDto } from '../dtos/post.dto';
+import { CreatePostDto } from '../dtos/Post.dto';
 
 @Injectable()
 export class PostService {

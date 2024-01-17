@@ -1,5 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
+  Contains,
   IsEmail,
   IsString,
   IsUrl,
@@ -9,6 +10,8 @@ import {
 export class CreateUserDto {
   @ApiProperty({ description: 'This is the username of the user' }) // Swagger permite dar descripciones a los campos
   @IsString()
+  @MinLength(4)
+  @MaxLength(20)
   readonly username: string;
   @ApiProperty()
   @IsString()
@@ -25,6 +28,7 @@ export class CreateUserDto {
   readonly name: string;
   @ApiProperty()
   @IsString()
+  @Contains('admin' || 'user')
   readonly role: string;
   @ApiProperty()
   @IsUrl()

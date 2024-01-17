@@ -1,11 +1,12 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { IsDate, IsString } from 'class-validator';
+import { User } from 'src/users/entities/User.entity';
 
 export class CreateTimelineDto {
   @IsDate()
   @ApiProperty()
-  cratedAt: Date;
+  readonly cratedAt: Date;
   @IsString()
   @ApiProperty()
   readonly title: string;
@@ -14,10 +15,12 @@ export class CreateTimelineDto {
   readonly content: string;
   @IsString()
   @ApiProperty()
-  readonly img?: string[];
+  readonly img?: string;
   @IsString()
   @ApiProperty()
-  readonly tag?: string[];
+  readonly tag?: string;
+  @ApiProperty()
+  readonly author: User;
 }
 
 export class UpdateTimelineDto extends PartialType(CreateTimelineDto) {}

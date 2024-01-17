@@ -1,5 +1,3 @@
-import { Timeline } from './../../timeline/entities/Timeline.entity';
-import { Post } from './../../posts/entities/Post.entity';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -9,7 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 export class CreateUserDto {
-  @ApiProperty()
+  @ApiProperty({ description: 'This is the username of the user' }) // Swagger permite dar descripciones a los campos
   @IsString()
   readonly username: string;
   @ApiProperty()
@@ -27,18 +25,8 @@ export class CreateUserDto {
   readonly name: string;
   @ApiProperty()
   @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  readonly lastname: string;
-  @ApiProperty()
-  @IsUrl()
-  readonly img?: string;
-  @ApiProperty()
-  readonly posts?: Post[];
-  @ApiProperty()
-  readonly timeline?: Timeline[];
-  @IsString()
   readonly role: string;
+  @ApiProperty()
   @IsUrl()
   readonly avatarImg?: string;
 }

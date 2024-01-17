@@ -1,13 +1,17 @@
-import { Timeline } from './../../timeline/entities/Timeline.entity';
-import { Post } from './../../posts/entities/Post.entity';
+import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 
-export interface User {
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
   id: number;
+  @Column({ type: 'varchar', length: 255 })
   name: string;
+  @Column({ type: 'varchar', length: 255 })
   email?: string;
+  @Column({ type: 'varchar', length: 255 })
   password?: string;
-  posts?: Post[];
-  timeline?: Timeline[];
+  @Column({ type: 'varchar', length: 255 })
   role: string;
+  @Column({ type: 'varchar', length: 255 })
   avatarImg?: string;
 }

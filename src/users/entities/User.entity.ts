@@ -1,6 +1,6 @@
-import { Post } from 'src/posts/entities/Post.entity';
+import { Post } from '../../posts/entities/Post.entity';
 import { Timeline } from './../../timeline/entities/Timeline.entity';
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
@@ -8,7 +8,7 @@ export class User {
   id: number;
   @Column({ type: 'varchar', length: 255 })
   name: string;
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, unique: true })
   email?: string;
   @Column({ type: 'varchar', length: 255 })
   password?: string;
@@ -16,8 +16,6 @@ export class User {
   role: string;
   @Column({ type: 'varchar', length: 255 })
   avatarImg?: string;
-  @ManyToOne(() => Timeline, (timeline) => timeline.author)
   timelines?: Timeline[];
-  @ManyToOne(() => Post, (post) => post.author)
   posts?: Post[];
 }

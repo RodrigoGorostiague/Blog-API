@@ -31,7 +31,7 @@ TypeORM está desarrollado con typescript, así que la integración con NestJS v
           username: user,
           password,
           database,
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true,
         };
       },

@@ -1,10 +1,10 @@
 import { IsDate, IsString } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'timelines' })
 export class Timeline {
-  @PrimaryColumn({ type: 'date' })
+  @PrimaryColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   @IsDate()
   cratedAt: Date;
   @Column({ type: 'varchar', length: 255 })
@@ -19,5 +19,6 @@ export class Timeline {
   @Column({ type: 'varchar', length: 255 })
   @IsString()
   tag?: string;
+  @ManyToOne(() => User, (user) => user.timelines)
   author: User;
 }

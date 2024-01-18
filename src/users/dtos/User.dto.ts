@@ -1,7 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
-  Contains,
   IsEmail,
+  IsIn,
   IsString,
   IsUrl,
   MaxLength,
@@ -28,7 +28,7 @@ export class CreateUserDto {
   readonly name: string;
   @ApiProperty()
   @IsString()
-  @Contains('admin' || 'user')
+  @IsIn(['admin', 'user'], { message: 'Role should be either admin or user' })
   readonly role: string;
   @ApiProperty()
   @IsUrl()

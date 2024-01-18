@@ -1,19 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { User } from './../../users/entities/User.entity';
+import { Reply } from 'src/reply/entities/Reply.entity';
 
 @Entity({ name: 'posts' })
 export class Post {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  creatAt: Date;
   @Column({ type: 'varchar', length: 255 })
   title: string;
   @Column({ type: 'text' })
   content: string;
-  author: User;
-  @Column({ type: 'date' })
-  creatAt: Date;
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  updateAt: Date;
   @Column({ type: 'varchar', length: 255, unique: true })
   img?: string[];
-  @Column({ type: 'varchar', length: 255 })
-  reply?: Post[];
+  @ManyToOne(() => User, (user) => user.posts)
+  author: User;
+  @OneToMany(() => Reply, (reply) => reply.post)
+  reply?: Reply[];
 }

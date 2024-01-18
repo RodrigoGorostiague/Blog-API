@@ -1,12 +1,9 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-import { IsDate, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
 
 export class CreateTimelineDto {
-  @IsDate()
-  @ApiProperty()
-  readonly cratedAt: Date;
   @IsString()
   @ApiProperty()
   readonly title: string;

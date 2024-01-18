@@ -11,7 +11,7 @@ export class ReplyService {
   ) {}
 
   findAll() {
-    return this.replyRepository.find();
+    return this.replyRepository.find({ relations: ['author', 'post'] });
   }
 
   findOne(createAt: Date) {

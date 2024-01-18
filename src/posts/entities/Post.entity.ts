@@ -5,7 +5,7 @@ import { Reply } from 'src/reply/entities/Reply.entity';
 @Entity({ name: 'posts' })
 export class Post {
   @PrimaryColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  creatAt: Date;
+  createAt: Date;
   @Column({ type: 'varchar', length: 255 })
   title: string;
   @Column({ type: 'text' })
@@ -16,6 +16,6 @@ export class Post {
   img?: string[];
   @ManyToOne(() => User, (user) => user.posts)
   author: User;
-  @OneToMany(() => Reply, (reply) => reply.post)
+  @OneToMany(() => Reply, (reply) => reply.post, { nullable: true })
   reply?: Reply[];
 }

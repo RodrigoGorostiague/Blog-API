@@ -2,6 +2,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { IsString } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
+import { Tag } from '../entities/Tag.entity';
 
 export class CreateTimelineDto {
   @IsString()
@@ -15,7 +16,7 @@ export class CreateTimelineDto {
   readonly img?: string;
   @IsString()
   @ApiProperty()
-  readonly tag?: string;
+  readonly tag?: Tag[];
   @ApiProperty()
   readonly author: User;
 }

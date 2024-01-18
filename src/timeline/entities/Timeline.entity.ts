@@ -1,6 +1,7 @@
 import { IsDate, IsString } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Tag } from './Tag.entity';
 
 @Entity({ name: 'timelines' })
 export class Timeline {
@@ -16,9 +17,9 @@ export class Timeline {
   @Column({ type: 'varchar', length: 255 })
   @IsString()
   img?: string;
-  @Column({ type: 'varchar', length: 255 })
+  @OneToMany(() => Tag, (tag) => tag.timeline)
   @IsString()
-  tag?: string;
+  tag?: Tag[];
   @ManyToOne(() => User, (user) => user.timelines)
   author: User;
 }

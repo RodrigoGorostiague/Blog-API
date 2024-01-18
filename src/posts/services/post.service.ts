@@ -11,13 +11,13 @@ export class PostService {
   ) {}
 
   findAll() {
-    return this.postRepository.find();
+    return this.postRepository.find({ relations: ['author', 'reply'] });
   }
 
-  findOne(id: number) {
-    const post = this.postRepository.findOneBy({ id });
+  findOne(createAt: Date) {
+    const post = this.postRepository.findOneBy({ createAt });
     if (!post) {
-      throw new NotFoundException(`Post #${id} not found`);
+      throw new NotFoundException(`Post #${createAt} not found`);
     } else {
       return post;
     }
@@ -28,22 +28,22 @@ export class PostService {
     return this.postRepository.save(newPost);
   }
 
-  async update(id: number, changes: any) {
-    const post = await this.postRepository.findOneBy({ id });
+  async update(createAt: Date, changes: any) {
+    const post = await this.postRepository.findOneBy({ createAt });
     if (!post) {
-      throw new NotFoundException(`Post #${id} not found`);
+      throw new NotFoundException(`Post #${createAt} not found`);
     } else {
       this.postRepository.merge(post, changes);
       return this.postRepository.save(post);
     }
   }
 
-  async remove(id: number) {
-    const post = await this.findOne(id);
+  async remove(createAt: Date) {
+    const post = this.postRepository.findOneBy({ createAt });
     if (!post) {
-      throw new NotFoundException(`Post #${id} not found`);
+      throw new NotFoundException(`Post #${createAt} not found`);
     } else {
-      return this.postRepository.delete(id);
+      return this.postRepository.delete(createAt);
     }
   }
 }

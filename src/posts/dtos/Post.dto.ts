@@ -2,7 +2,7 @@ import { User } from '../../users/entities/User.entity';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { IsString, IsUrl } from 'class-validator';
-import { Post } from '../entities/Post.entity';
+import { Reply } from 'src/reply/entities/Reply.entity';
 export class CreatePostDto {
   @IsString()
   @ApiProperty()
@@ -10,13 +10,13 @@ export class CreatePostDto {
   @IsString()
   @ApiProperty()
   content: string;
-  @ApiProperty()
-  author: User;
   @IsUrl()
   @ApiProperty()
   img?: string[];
   @ApiProperty()
-  reply?: Post[];
+  author: User;
+  @ApiProperty()
+  reply?: Reply[];
 }
 
 export class UpdatePostDto extends PartialType(CreatePostDto) {}

@@ -12,7 +12,7 @@ export class TimelineService {
   ) {}
 
   findAll() {
-    return this.timelineRepository.find();
+    return this.timelineRepository.find({ relations: ['author', 'tag'] });
   }
 
   async findOne(cratedAt: Date) {

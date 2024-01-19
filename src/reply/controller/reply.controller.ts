@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -22,7 +23,7 @@ export class ReplyController {
   }
 
   @Get(':id')
-  findOne(id: Date) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.replyService.findOne(id);
   }
 
@@ -32,12 +33,15 @@ export class ReplyController {
   }
 
   @Put(':id')
-  update(@Param('id') id: Date, @Body() payload: CreateReplyDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: CreateReplyDto,
+  ) {
     return this.replyService.update(id, payload);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: Date) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.replyService.remove(id);
   }
 }

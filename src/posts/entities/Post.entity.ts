@@ -1,10 +1,18 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './../../users/entities/User.entity';
-import { Reply } from 'src/reply/entities/Reply.entity';
+import { Reply } from '../../reply/entities/Reply.entity';
 
 @Entity({ name: 'posts' })
 export class Post {
-  @PrimaryColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
   @Column({ type: 'varchar', length: 255 })
   title: string;

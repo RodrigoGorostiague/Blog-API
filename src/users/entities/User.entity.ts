@@ -1,4 +1,4 @@
-import { Reply } from 'src/reply/entities/Reply.entity';
+import { Reply } from '../../reply/entities/Reply.entity';
 import { Post } from '../../posts/entities/Post.entity';
 import { Timeline } from './../../timeline/entities/Timeline.entity';
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
@@ -15,7 +15,7 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   name: string;
   @Column({ type: 'varchar', length: 255, unique: true })
-  email?: string;
+  email: string;
   @Column({ type: 'varchar', length: 255 })
   password?: string;
   @Column({
@@ -25,7 +25,7 @@ export class User {
   })
   role: string;
   @Column({ type: 'varchar', length: 255 })
-  avatarImg?: string;
+  avatar_img?: string;
   @OneToMany(() => Timeline, (timeline) => timeline.author)
   timelines?: Timeline[];
   @OneToMany(() => Post, (post) => post.author)

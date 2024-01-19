@@ -1,13 +1,21 @@
 import { IsDate, IsString } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Tag } from './Tag.entity';
 
 @Entity({ name: 'timelines' })
 export class Timeline {
-  @PrimaryColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   @IsDate()
-  cratedAt: Date;
+  createdAt: Date;
   @Column({ type: 'varchar', length: 255 })
   @IsString()
   title: string;

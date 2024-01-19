@@ -1,8 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-import { IsString } from 'class-validator';
-import { User } from '../../users/entities/User.entity';
-import { Tag } from '../entities/Tag.entity';
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreateTimelineDto {
   @IsString()
@@ -14,11 +12,16 @@ export class CreateTimelineDto {
   @IsString()
   @ApiProperty()
   readonly img?: string;
-  @IsString()
+  @IsNumber()
+  @IsPositive()
   @ApiProperty()
-  readonly tag?: Tag[];
+  @IsNotEmpty()
+  readonly tagId: number;
   @ApiProperty()
-  readonly author: User;
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  readonly userId: number;
 }
 
 export class UpdateTimelineDto extends PartialType(CreateTimelineDto) {}

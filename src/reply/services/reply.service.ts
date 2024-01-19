@@ -3,42 +3,49 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reply } from '../entities/Reply.entity';
 import { CreateReplyDto, UpdateReplyDto } from '../dtos/Reply.dto';
+import { User } from '../../users/entities/User.entity';
 
 @Injectable()
 export class ReplyService {
   constructor(
     @InjectRepository(Reply) private replyRepository: Repository<Reply>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   findAll() {
     return this.replyRepository.find({ relations: ['author', 'post'] });
   }
 
-  findOne(createAt: Date) {
-    const reply = this.replyRepository.findOneBy({ createAt });
+  findOne(id: number) {
+    const reply = this.replyRepository.findOneBy({ id });
     if (!reply) {
-      throw new NotFoundException(`Reply #${createAt} not found`);
+      throw new NotFoundException(`Reply #${id} not found`);
     } else {
       return reply;
     }
   }
 
-  create(data: CreateReplyDto) {
+  async create(data: CreateReplyDto) {
     const newReply = this.replyRepository.create(data);
+    if (data.userId) {
+      const author = await this.userRepository.findOneBy({ id: data.userId });
+      newReply.author = author;
+    }
     return this.replyRepository.save(newReply);
   }
 
-  async update(createAt: Date, changes: UpdateReplyDto) {
-    const reply = await this.replyRepository.findOneBy({ createAt });
+  async update(id: number, changes: UpdateReplyDto) {
+    const reply = await this.replyRepository.findOneBy({ id });
     this.replyRepository.merge(reply, changes);
     return this.replyRepository.save(reply);
   }
 
-  async remove(createAt: Date) {
-    const reply = await this.findOne(createAt);
+  async remove(id: number) {
+    const reply = await this.findOne(id);
     if (!reply) {
-      throw new NotFoundException(`Reply #${createAt} not found`);
+      throw new NotFoundException(`Reply #${id} not found`);
     }
-    return this.replyRepository.delete(createAt);
+    return this.replyRepository.delete(id);
   }
 }

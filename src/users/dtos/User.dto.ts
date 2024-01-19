@@ -12,26 +12,21 @@ export class CreateUserDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
-  readonly username: string;
+  readonly name: string;
+  @ApiProperty()
+  @IsEmail()
+  readonly email: string;
   @ApiProperty()
   @IsString()
   @MinLength(8)
   @MaxLength(20)
   readonly password: string;
   @ApiProperty()
-  @IsEmail()
-  readonly email: string;
-  @ApiProperty()
-  @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  readonly name: string;
-  @ApiProperty()
   @IsString()
   @IsIn(['admin', 'user'], { message: 'Role should be either admin or user' })
   readonly role: string;
   @ApiProperty()
   @IsUrl()
-  readonly avatarImg?: string;
+  readonly avatar_img?: string;
 }
 export class UpdateUserDto extends PartialType(CreateUserDto) {}

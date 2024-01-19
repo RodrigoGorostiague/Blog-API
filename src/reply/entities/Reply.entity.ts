@@ -1,17 +1,17 @@
-import { Post } from 'src/posts/entities/Post.entity';
-import { User } from 'src/users/entities/User.entity';
+import { Post } from '../../posts/entities/Post.entity';
+import { User } from '../../users/entities/User.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 @Entity({ name: 'reply' })
 export class Reply {
-  @PrimaryColumn()
-  @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @PrimaryGeneratedColumn({ type: 'bigint' })
+  id: number;
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
   @Column({ type: 'text' })
   content: string;

@@ -11,7 +11,9 @@ export class UserService {
   ) {}
 
   findAll() {
-    return this.userRepository.find({ relations: ['post', 'reply'] });
+    return this.userRepository.find({
+      relations: ['posts', 'reply', 'timelines'],
+    });
   }
 
   async findOne(id: number) {

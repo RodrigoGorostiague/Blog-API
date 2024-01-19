@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Timeline } from './Timeline.entity';
 
 @Entity({ name: 'tags' })
@@ -9,6 +9,6 @@ export class Tag {
   name: string;
   @Column({ type: 'varchar', length: 255 })
   description: string;
-  @ManyToOne(() => Timeline, (timeline) => timeline)
-  timeline: Timeline;
+  @ManyToMany(() => Timeline, (timeline) => timeline)
+  timelines: Timeline;
 }

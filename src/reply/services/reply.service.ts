@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Reply } from '../entities/Reply.entity';
 import { CreateReplyDto, UpdateReplyDto } from '../dtos/Reply.dto';
 import { User } from '../../users/entities/User.entity';
@@ -24,6 +24,10 @@ export class ReplyService {
     } else {
       return reply;
     }
+  }
+
+  findByIds(ids: number[]) {
+    return this.replyRepository.findBy({ id: In([ids]) });
   }
 
   async create(data: CreateReplyDto) {

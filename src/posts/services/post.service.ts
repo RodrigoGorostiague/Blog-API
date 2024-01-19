@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './../entities/Post.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreatePostDto, UpdatePostDto } from '../dtos/Post.dto';
 import { User } from '../../users/entities/User.entity';
 
@@ -27,6 +27,10 @@ export class PostService {
     } else {
       return post;
     }
+  }
+
+  findByIds(ids: number[]) {
+    return this.postRepository.findBy({ id: In([ids]) });
   }
 
   async create(data: CreatePostDto) {

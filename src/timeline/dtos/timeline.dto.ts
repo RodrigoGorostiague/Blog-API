@@ -1,6 +1,12 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateTimelineDto {
   @IsString()
@@ -12,11 +18,10 @@ export class CreateTimelineDto {
   @IsString()
   @ApiProperty()
   readonly img?: string;
-  @IsNumber()
-  @IsPositive()
   @ApiProperty()
+  @IsArray()
   @IsNotEmpty()
-  readonly tagId: number;
+  readonly tagsId: number[];
   @ApiProperty()
   @IsNumber()
   @IsPositive()

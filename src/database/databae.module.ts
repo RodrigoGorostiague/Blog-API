@@ -1,5 +1,4 @@
 import { Module, Global } from '@nestjs/common';
-import { Client } from 'pg';
 import config from '../config';
 import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -37,24 +36,7 @@ TypeORM está desarrollado con typescript, así que la integración con NestJS v
       },
     }),
   ],
-  providers: [
-    {
-      provide: 'PG',
-      useFactory: (configService: ConfigType<typeof config>) => {
-        const { user, password, host, database, port } = configService.database;
-        const client = new Client({
-          user,
-          password,
-          host,
-          database,
-          port,
-        });
-
-        client.connect();
-      },
-      inject: [config.KEY],
-    },
-  ],
-  exports: ['PG', TypeOrmModule],
+  providers: [],
+  exports: [TypeOrmModule],
 })
 export class DatabaseModule {}

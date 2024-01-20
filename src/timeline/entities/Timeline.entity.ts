@@ -3,6 +3,7 @@ import { User } from '../../users/entities/User.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -14,9 +15,20 @@ import { Tag } from './Tag.entity';
 export class Timeline {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'created_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   @IsDate()
   createdAt: Date;
+  @Column({
+    name: 'updated_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  @IsDate()
+  updatedAt: Date;
   @Column({ type: 'varchar', length: 255 })
   title: string;
   @Column({ type: 'text' })
@@ -28,8 +40,13 @@ export class Timeline {
     nullable: true,
     cascade: false,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'timelines_has_tags',
+    joinColumn: { name: 'timeline_id' },
+    inverseJoinColumn: { name: 'tag_id' },
+  })
   tags?: Tag[];
   @ManyToOne(() => User, (user) => user.timelines)
+  @JoinColumn({ name: 'author_id' })
   author: User;
 }

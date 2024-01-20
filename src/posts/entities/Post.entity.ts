@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -12,17 +13,26 @@ import { Reply } from './Reply.entity';
 export class Post {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'create_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createAt: Date;
   @Column({ type: 'varchar', length: 255 })
   title: string;
   @Column({ type: 'text' })
   content: string;
-  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'update_at',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   updateAt: Date;
   @Column({ type: 'varchar', length: 255 })
   img?: string[];
   @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: 'author_id' })
   author: User;
   @OneToMany(() => Reply, (reply) => reply.post, { nullable: true })
   reply?: Reply[];

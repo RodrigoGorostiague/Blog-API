@@ -24,8 +24,8 @@ export class User {
     default: 'user',
   })
   role: string;
-  @Column({ type: 'varchar', length: 255 })
-  avatar_img?: string;
+  @Column({ name: 'avatar_img', type: 'varchar', length: 255 })
+  avatarImg?: string;
   @OneToMany(() => Timeline, (timeline) => timeline.author)
   timelines?: Timeline[];
   @OneToMany(() => Post, (post) => post.author)

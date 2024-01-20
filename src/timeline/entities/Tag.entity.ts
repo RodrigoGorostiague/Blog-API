@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Timeline } from './Timeline.entity';
 
 @Entity({ name: 'tags' })
@@ -10,5 +16,6 @@ export class Tag {
   @Column({ type: 'varchar', length: 255 })
   description: string;
   @ManyToMany(() => Timeline, (timeline) => timeline, { cascade: false })
+  @JoinColumn({ name: 'timeline_id' })
   timelines: Timeline[];
 }

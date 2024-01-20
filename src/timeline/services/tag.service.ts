@@ -26,7 +26,11 @@ export class TagService {
 
   async update(id: number, changes: UpdateTagDto) {
     const tag = await this.tagRepository.findOneBy({ id });
-    this.tagRepository.merge(tag, changes);
+    if (!tag) {
+      throw new NotFoundException(`Tag #${id} not found`);
+    } else {
+      this.tagRepository.merge(tag, changes);
+    }
     return this.tagRepository.save(tag);
   }
 

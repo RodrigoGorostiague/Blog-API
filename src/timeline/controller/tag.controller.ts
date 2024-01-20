@@ -25,8 +25,24 @@ export class TagController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.tagService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.tagService.findOne(id).then((tag) => {
+      if (!tag) {
+        res.status(404).json({
+          status: 'Not Found',
+          message: 'The tag has not been found',
+        });
+      } else {
+        res.status(200).json({
+          status: 'OK',
+          message: 'The tag has been successfully found',
+          data: tag,
+        });
+      }
+    });
   }
 
   @Post()

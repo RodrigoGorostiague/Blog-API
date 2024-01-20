@@ -25,13 +25,43 @@ export class TimelineController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.timelineService.findOne(id);
+  findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.timelineService.findOne(id).then((timeline) => {
+      if (!timeline) {
+        res.status(404).json({
+          status: 'Not Found',
+          message: 'The timeline has not been found',
+        });
+      } else {
+        res.status(200).json({
+          status: 'OK',
+          message: 'The timeline has been successfully found',
+          data: timeline,
+        });
+      }
+    });
   }
 
   @Post()
-  async create(@Body() createTimelineDto: CreateTimelineDto) {
-    return this.timelineService.create(createTimelineDto);
+  async create(
+    @Body() createTimelineDto: CreateTimelineDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.timelineService
+      .create(createTimelineDto)
+      .then((timeline) => {
+        res.status(201).json({
+          status: 'OK',
+          message: 'The timeline has been successfully created',
+          data: timeline,
+        });
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
   }
 
   @Put(':id')
@@ -45,7 +75,7 @@ export class TimelineController {
       .then(() => {
         res.status(200).json({
           status: 'OK',
-          message: 'The timeline has been successfully updated',
+          message: 'The tag has been successfully updated',
         });
       })
       .catch((err) => {
@@ -63,7 +93,7 @@ export class TimelineController {
       .then(() => {
         res.status(200).json({
           status: 'OK',
-          message: 'The timeline has been successfully deleted',
+          message: 'The tag has been successfully deleted',
         });
       })
       .catch((err) => {

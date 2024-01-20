@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
   port: Number(process.env.TYPEORM_PORT),
   username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD,
-  database: process.env.DATABASE,
+  database: process.env.TYPEORM_DATABASE,
   logging: false,
   synchronize: false,
   entities: ['src/**/*.entity.{ts,js}'],

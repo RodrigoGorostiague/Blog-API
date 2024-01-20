@@ -41,7 +41,11 @@ export class ReplyService {
 
   async update(id: number, changes: UpdateReplyDto) {
     const reply = await this.replyRepository.findOneBy({ id });
-    this.replyRepository.merge(reply, changes);
+    if (!reply) {
+      throw new NotFoundException(`Reply #${id} not found`);
+    } else {
+      this.replyRepository.merge(reply, changes);
+    }
     return this.replyRepository.save(reply);
   }
 

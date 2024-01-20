@@ -2,6 +2,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -21,14 +22,13 @@ export class CreateReplyDto {
   title: string;
   @ApiProperty()
   @IsUrl()
+  @IsOptional()
   img: string;
-
   @ApiProperty()
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
   userId: number;
-
   @ApiProperty()
   @IsNumber()
   @IsPositive()

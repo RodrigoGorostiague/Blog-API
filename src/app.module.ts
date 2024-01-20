@@ -8,7 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 import { enviroments } from './enviroments';
 import config from './config';
 import { DatabaseModule } from './database/databae.module';
-import { ReplyModule } from './reply/reply.module';
 //import configSchema from './configSchema';
 
 @Module({
@@ -23,7 +22,6 @@ import { ReplyModule } from './reply/reply.module';
     TimelineModule,
     PostsModule,
     DatabaseModule,
-    ReplyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

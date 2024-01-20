@@ -37,9 +37,10 @@ export class TimelineService {
     }
     if (data.tagsId) {
       const tags = await this.tagRepository.findBy({
-        id: In([data.tagsId]),
+        id: In(data.tagsId),
       });
       newTimeline.tags = tags;
+      console.log(newTimeline);
     }
     return this.timelineRepository.save(newTimeline);
   }

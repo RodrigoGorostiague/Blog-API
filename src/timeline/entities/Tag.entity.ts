@@ -9,6 +9,6 @@ export class Tag {
   name: string;
   @Column({ type: 'varchar', length: 255 })
   description: string;
-  @ManyToMany(() => Timeline, (timeline) => timeline)
-  timelines: Timeline;
+  @ManyToMany(() => Timeline, (timeline) => timeline, { cascade: false })
+  timelines: Timeline[];
 }

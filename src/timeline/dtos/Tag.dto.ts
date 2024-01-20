@@ -5,7 +5,7 @@ export class CreateTagDto {
   @ApiProperty()
   @IsString()
   @MaxLength(20)
-  readonly title: string;
+  readonly name: string;
   @ApiProperty()
   @IsString()
   @MaxLength(100)

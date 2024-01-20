@@ -30,24 +30,8 @@ export class TimelineController {
   }
 
   @Post()
-  create(
-    @Body() createTimelineDto: CreateTimelineDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    return this.timelineService
-      .create(createTimelineDto)
-      .then(() => {
-        res.status(201).json({
-          status: 'Created',
-          message: 'The timeline has been successfully created',
-        });
-      })
-      .catch((err) => {
-        res.status(400).json({
-          status: 'Que paso papa, te asustaste???',
-          message: err,
-        });
-      });
+  async create(@Body() createTimelineDto: CreateTimelineDto) {
+    return this.timelineService.create(createTimelineDto);
   }
 
   @Put(':id')

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './../../users/entities/User.entity';
-import { Reply } from '../../reply/entities/Reply.entity';
+import { Reply } from './Reply.entity';
 
 @Entity({ name: 'posts' })
 export class Post {
@@ -20,7 +20,7 @@ export class Post {
   content: string;
   @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   updateAt: Date;
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ type: 'varchar', length: 255 })
   img?: string[];
   @ManyToOne(() => User, (user) => user.posts)
   author: User;

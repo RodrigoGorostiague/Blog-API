@@ -1,4 +1,4 @@
-import { Reply } from '../../reply/entities/Reply.entity';
+import { Reply } from '../../posts/entities/Reply.entity';
 import { Post } from '../../posts/entities/Post.entity';
 import { Timeline } from './../../timeline/entities/Timeline.entity';
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';

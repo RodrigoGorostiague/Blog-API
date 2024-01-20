@@ -1,9 +1,10 @@
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsOptional } from 'class-validator';
 import { User } from '../../users/entities/User.entity';
 import {
   Column,
   Entity,
   JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -17,16 +18,16 @@ export class Timeline {
   @IsDate()
   createdAt: Date;
   @Column({ type: 'varchar', length: 255 })
-  @IsString()
   title: string;
   @Column({ type: 'text' })
-  @IsString()
   content: string;
-  @Column({ type: 'varchar', length: 255 })
-  @IsString()
-  img?: string;
-  @IsString()
-  @ManyToOne(() => Tag, (tag) => tag.timelines)
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  @IsOptional()
+  img: string;
+  @ManyToMany(() => Tag, (tag) => tag.timelines, {
+    nullable: true,
+    cascade: false,
+  })
   @JoinTable()
   tags?: Tag[];
   @ManyToOne(() => User, (user) => user.timelines)

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostService } from '../services/post.service';
-import { CreatePostDto } from '../dtos/Post.dto';
+import { CreatePostDto, UpdatePostDto } from '../dtos/Post.dto';
 
 @ApiTags('Publicaciones')
 @Controller('publicaciones')
@@ -35,7 +35,7 @@ export class PostController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() payload: CreatePostDto,
+    @Body() payload: UpdatePostDto,
   ) {
     return this.postService.update(id, payload);
   }

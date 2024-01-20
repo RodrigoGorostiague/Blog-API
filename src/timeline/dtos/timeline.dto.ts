@@ -4,23 +4,25 @@ import {
   IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
 } from 'class-validator';
 
 export class CreateTimelineDto {
-  @IsString()
   @ApiProperty()
+  @IsString()
   readonly title: string;
-  @IsString()
   @ApiProperty()
+  @IsString()
   readonly content: string;
-  @IsString()
   @ApiProperty()
+  @IsString()
+  @IsOptional()
   readonly img?: string;
   @ApiProperty()
   @IsArray()
-  @IsNotEmpty()
+  @IsOptional()
   readonly tagsId: number[];
   @ApiProperty()
   @IsNumber()

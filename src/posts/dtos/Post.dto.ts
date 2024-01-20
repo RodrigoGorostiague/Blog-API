@@ -1,9 +1,10 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import {
-  IsDate,
+  IsArray,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -17,6 +18,7 @@ export class CreatePostDto {
   content: string;
   @IsUrl()
   @ApiProperty()
+  @IsOptional()
   img?: string[];
   @ApiProperty()
   @IsNumber()
@@ -24,8 +26,9 @@ export class CreatePostDto {
   @IsNotEmpty()
   userId: number;
   @ApiProperty()
-  @IsDate()
-  replyId?: number;
+  @IsArray()
+  @IsOptional()
+  replyId?: number[];
 }
 
 export class UpdatePostDto extends PartialType(CreatePostDto) {}

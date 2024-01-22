@@ -9,12 +9,17 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostService } from '../services/post.service';
 import { CreatePostDto, UpdatePostDto } from '../dtos/Post.dto';
 import { Response } from 'express';
+import { Role } from 'src/auth/models/roles.model';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+@UseGuards(RolesGuard)
 @ApiTags('Publicaciones')
 @Controller('publicaciones')
 export class PostController {
@@ -46,6 +51,7 @@ export class PostController {
     });
   }
 
+  @Roles(Role.ADMIN)
   @Post()
   create(
     @Body() payload: CreatePostDto,
@@ -67,6 +73,7 @@ export class PostController {
       });
   }
 
+  @Roles(Role.ADMIN)
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -89,6 +96,7 @@ export class PostController {
     });
   }
 
+  @Roles(Role.ADMIN)
   @Delete(':id')
   remove(
     @Param('id', ParseIntPipe) id: number,

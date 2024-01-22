@@ -13,16 +13,16 @@ import { Exclude } from 'class-transformer';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 50 })
   name: string;
-  @Column({ type: 'varchar', length: 255, unique: true })
+  @Column({ type: 'varchar', length: 75, unique: true })
   email: string;
   @Column({ type: 'varchar', length: 255 })
   @Exclude()
   password?: string;
   @Column({
     type: 'varchar',
-    length: 255,
+    length: 10,
     default: 'user',
   })
   role: string;

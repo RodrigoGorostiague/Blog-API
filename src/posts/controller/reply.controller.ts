@@ -17,7 +17,7 @@ import { CreateReplyDto } from '../dtos/Reply.dto';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 //import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
-//import { Public } from 'src/auth/decorators/public.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @ApiTags('Reply')
 @Controller('reply')
@@ -28,14 +28,14 @@ export class ReplyController {
 
   @Get()
   //@SetMetadata('isPublic', true) // This is the decorator that we need to add
-  //@Public()
+  @Public()
   findAll() {
     return this.replyService.findAll();
   }
 
   @Get(':id')
   //@SetMetadata('isPublic', true) // This is the decorator that we need to add
-  //@Public()
+  @Public()
   findOne(
     @Param('id', ParseIntPipe) id: number,
     @Res({ passthrough: true }) res: Response,

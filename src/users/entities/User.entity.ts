@@ -2,6 +2,7 @@ import { Reply } from '../../posts/entities/Reply.entity';
 import { Post } from '../../posts/entities/Post.entity';
 import { Timeline } from './../../timeline/entities/Timeline.entity';
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 /**
  * No debemos añadir un decorador extra que sea el que maneje la clave foránea como lo es **@JoinColumn()**, debido a que
@@ -17,6 +18,7 @@ export class User {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
   @Column({ type: 'varchar', length: 255 })
+  @Exclude()
   password?: string;
   @Column({
     type: 'varchar',

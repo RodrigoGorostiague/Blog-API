@@ -9,23 +9,33 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ReplyService } from '../services/reply.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateReplyDto } from '../dtos/Reply.dto';
 import { Response } from 'express';
+//import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
+//import { Public } from 'src/auth/decorators/public.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Reply')
 @Controller('reply')
+//@UseGuards(ApiKeyGuard)
+@UseGuards(JwtAuthGuard)
 export class ReplyController {
   constructor(private replyService: ReplyService) {}
 
   @Get()
+  //@SetMetadata('isPublic', true) // This is the decorator that we need to add
+  //@Public()
   findAll() {
     return this.replyService.findAll();
   }
 
   @Get(':id')
+  //@SetMetadata('isPublic', true) // This is the decorator that we need to add
+  //@Public()
   findOne(
     @Param('id', ParseIntPipe) id: number,
     @Res({ passthrough: true }) res: Response,

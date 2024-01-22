@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { enviroments } from './enviroments';
 import config from './config';
 import { DatabaseModule } from './database/databae.module';
+import { AuthModule } from './auth/auth.module';
 //import configSchema from './configSchema';
 
 @Module({
@@ -22,6 +23,7 @@ import { DatabaseModule } from './database/databae.module';
     TimelineModule,
     PostsModule,
     DatabaseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

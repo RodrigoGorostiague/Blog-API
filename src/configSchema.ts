@@ -8,6 +8,9 @@ const configSchema = Joi.object({
   POSTGRES_PASSWORD: Joi.string().required(),
   POSTGRES_PORT: Joi.number().required(),
   POSTGRES_HOST: Joi.string().hostname().required(),
+
+  API_KEY: Joi.string().required(),
+  JWT_SECRET: Joi.string().required(),
 });
 
 export default configSchema;

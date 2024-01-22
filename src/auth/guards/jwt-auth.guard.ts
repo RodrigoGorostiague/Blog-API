@@ -1,19 +1,24 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { Observable } from 'rxjs';
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  handleRequest(err, user, info) {
-    if (err || !user) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNAUTHORIZED,
-          message:
-            info.message || 'You are not authorized to access this resource',
-        },
-        HttpStatus.UNAUTHORIZED,
-      );
+  constructor(private reflector: Reflector) {
+    super();
+  }
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const isPublic = this.reflector.get<boolean>(
+      IS_PUBLIC_KEY,
+      context.getHandler(),
+    );
+    if (isPublic) {
+      return true;
     }
-    return user;
+    return super.canActivate(context);
   }
 }

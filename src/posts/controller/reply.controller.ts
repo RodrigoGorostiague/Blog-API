@@ -15,9 +15,9 @@ import { ReplyService } from '../services/reply.service';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateReplyDto } from '../dtos/Reply.dto';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 //import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
 //import { Public } from 'src/auth/decorators/public.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('Reply')
 @Controller('reply')
